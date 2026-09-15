@@ -1,0 +1,16 @@
+body {
+    background-color: #f01d1d; 
+    font-family: "Arial Narrow";
+    padding: 20px 40px;
+}
+h1 {
+    font-size: 3em;
+}
+ul {
+    font-size: 1.5em;
+    line-height: 1.6;
+}
+a {
+    color: #000000;
+    text-decoration: underline;
+}
