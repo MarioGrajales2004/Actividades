@@ -1,40 +1,44 @@
-let e = [];
+let estudiantes = [];
 
 function agregarEstudiante() {
-    const in_n = document.getElementById('nombre');
-    const in_c = document.getElementById('calificacion');
-    
-    const n = in_n.value.trim();
-    const c = parseFloat(in_c.value);
+    let nombre = document.getElementById('nombre').value;
+    let calificacion = parseFloat(document.getElementById('calificacion').value);
 
-    if (n === "" || isNaN(c)) {
-        alert("Por favor, ingresa un nombre y una calificación válida.");
+    if (nombre === "" || isNaN(calificacion)) {
+        alert("Por favor, ingresa datos válidos.");
         return; 
     }
 
-    e.push({ nombre: n, calificacion: c });
+    let nuevoEstudiante = { nombre: nombre, calificacion: calificacion };
+    estudiantes.push(nuevoEstudiante);
 
-    in_n.value = "";
-    in_c.value = "";
-    in_n.focus();
+    document.getElementById('nombre').value = "";
+    document.getElementById('calificacion').value = "";
 }
 
 function calcular() {
-    if (e.length === 0) {
-        alert("Agrega al menos un estudiante antes de calcular.");
-        return;
-    }
+    if (estudiantes.length === 0) return;
 
-    const s = e.reduce((t, x) => t + x.calificacion, 0);
-    const p = s / e.length;
+    let suma = estudiantes.reduce(function(total, est) {
+        return total + est.calificacion;
+    }, 0);
+    let promedio = suma / estudiantes.length;
 
-    const max = Math.max(...e.map(x => x.calificacion));
-    const min = Math.min(...e.map(x => x.calificacion));
+    let listaCalificaciones = estudiantes.map(function(est) {
+        return est.calificacion;
+    });
 
-    const mej = e.find(x => x.calificacion === max);
-    const peo = e.find(x => x.calificacion === min);
+    let notaMayor = Math.max(...listaCalificaciones);
+    let notaMenor = Math.min(...listaCalificaciones);
+    let mejor = estudiantes.find(function(est) {
+        return est.calificacion === notaMayor;
+    });
+    
+    let peor = estudiantes.find(function(est) {
+        return est.calificacion === notaMenor;
+    });
 
-    document.getElementById('promedio').value = p.toFixed(2);
-    document.getElementById('mejor').value = mej.nombre;
-    document.getElementById('peor').value = peo.nombre;
+    document.getElementById('promedio').value = promedio;
+    document.getElementById('mejor').value = mejor.nombre;
+    document.getElementById('peor').value = peor.nombre;
 }

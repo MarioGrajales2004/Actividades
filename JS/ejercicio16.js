@@ -1,43 +1,36 @@
 const sumar = (a, b) => a + b;
 const restar = (a, b) => a - b;
 const multiplicar = (a, b) => a * b;
-const dividir = (a, b) => b !== 0 ? a / b : 'Error: División por cero';
+const dividir = (a, b) => (b !== 0) ? (a / b) : 'Error';
 
-const calcularOperacion = (op) => {
-    const v1 = document.getElementById('numero1').value;
-    const v2 = document.getElementById('numero2').value;
-    
-    const n1 = parseFloat(v1);
-    const n2 = parseFloat(v2);
+function calcularOperacion(operacion) {
+    let n1 = parseFloat(document.getElementById('numero1').value);
+    let n2 = parseFloat(document.getElementById('numero2').value);
 
     if (isNaN(n1) || isNaN(n2)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Ingrese números válidos'
-        });
+        Swal.fire('Error', 'Ingresa números válidos', 'error');
         return;
     }
 
-    let r;
+    let resultadoFinal;
 
-    if (op === 'suma') {
-        r = sumar(n1, n2);
-    } else if (op === 'resta') {
-        r = restar(n1, n2);
-    } else if (op === 'multiplicacion') {
-        r = multiplicar(n1, n2);
-    } else if (op === 'division') {
-        r = dividir(n1, n2);
-        if (typeof r === 'string') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: r
-            });
-            return;
+    if (operacion === 'suma') {
+        resultadoFinal = sumar(n1, n2);
+    } 
+    else if (operacion === 'resta') {
+        resultadoFinal = restar(n1, n2);
+    } 
+    else if (operacion === 'multiplicacion') {
+        resultadoFinal = multiplicar(n1, n2);
+    } 
+    else if (operacion === 'division') {
+        resultadoFinal = dividir(n1, n2);
+        
+        if (resultadoFinal === 'Error') {
+            Swal.fire('Error', 'No se puede dividir entre cero', 'error');
+            return; 
         }
     }
 
-    document.getElementById('resultado').value = r;
-};
+    document.getElementById('resultado').value = resultadoFinal;
+}
